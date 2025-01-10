@@ -6,10 +6,9 @@ import styles from "./styles.module.css";
 
 export const RouteComponent = () => {
   return (
-    <div className={styles.container}>
-      <Card>Hello</Card>
-      asdfkljasdkfjsdl
-    </div>
+    <>
+      <Card className={styles.card}>Hello</Card>
+    </>
   );
 };
 

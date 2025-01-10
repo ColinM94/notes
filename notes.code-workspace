@@ -1,0 +1,28 @@
+{
+    "folders": [
+      {
+        "path": "."
+      }
+    ],
+    "settings": {
+      "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+      },
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "material-icon-theme.folders.associations": {
+        "src/app": "console",
+        "src/tool": "tools",
+        "src/shared": "global",
+        "consts": "constant",
+        "stores": "server",
+        "inits": "Azure-pipelines",
+        "init/tool": "tools"
+      },
+      "material-icon-theme.files.associations": {
+        "tsconfig.tool.json": "tsconfig"
+      },
+    }
+  }
+  

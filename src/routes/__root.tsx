@@ -3,17 +3,30 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 import styles from "./styles.module.css";
 
-export const Route = createRootRoute({
-  component: () => (
-    <>
-      <div className={styles.container}>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/settings">Settings</Link>
+const component = () => (
+  <>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <Outlet />
       </div>
-      <Outlet />
 
-      <TanStackRouterDevtools />
-    </>
-  ),
+      <div className={styles.nav}>
+        <Link to="/" className={styles.navLink}>
+          Home
+        </Link>
+        <Link to="/about" className={styles.navLink}>
+          About
+        </Link>
+        <Link to="/settings" className={styles.navLink}>
+          Settings
+        </Link>
+      </div>
+    </div>
+
+    {/* <TanStackRouterDevtools /> */}
+  </>
+);
+
+export const Route = createRootRoute({
+  component,
 });

@@ -1,2 +1,27 @@
 .container {
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+
+  .content {
+    flex: 1;
+    gap: var(--spacing-primary);
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: var(--spacing-primary);
+  }
+
+  .nav {
+    width: 100%;
+    padding: var(--spacing-primary);
+    flex-direction: row;
+    background-color: var(--color-surface3);
+    gap: var(--spacing-primary);
+
+    .navLink {
+      flex: 1;
+      text-align: center;
+      justify-content: center;
+    }
+  }
 }

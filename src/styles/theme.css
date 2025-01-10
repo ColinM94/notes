@@ -4,11 +4,13 @@
   --spacing-secondary: 8px;
   --spacing-tertiary: 4px;
 
+  --roundnesss: 4px;
+
   /* Colors */
-  --color-background: rgb(5, 5, 5);
-  --color-surface: rgb(10, 10, 10);
-  --color-surface2: rgb(15, 15, 15);
-  --color-surface3: rgb(20, 20, 20);
+  --color-background: rgb(10, 10, 10);
+  --color-surface: rgb(20, 20, 20);
+  --color-surface2: rgb(30, 30, 30);
+  --color-surface3: rgb(40, 40, 40);
 
   --color-text-primary: rgba(255, 255, 255, 0.85);
   --color-text-secondary: rgba(255, 255, 255, 0.65);
