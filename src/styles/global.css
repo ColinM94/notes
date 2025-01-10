@@ -1,0 +1,28 @@
+* :not(head, script, footer) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  text-wrap: balance;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.footer {
+  display: block;
+
+  * {
+    display: block;
+  }
+  background-color: red !important;
+}
