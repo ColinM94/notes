@@ -11,6 +11,12 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.95.1
         version: 1.95.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      appwrite:
+        specifier: ^16.1.0
+        version: 16.1.0
+      material-symbols:
+        specifier: ^0.27.2
+        version: 0.27.2
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -855,6 +861,9 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
+  appwrite@16.1.0:
+    resolution: {integrity: sha512-fFkhpOjxvobKKWdgvG3fcsYt93QEk0VJ86q7ALD53eWAFiFmpklNXeE4rpXqdmtWpin4VuyWhkmH1aOF/QxvsA==}
+
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
@@ -1164,6 +1173,9 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  material-symbols@0.27.2:
+    resolution: {integrity: sha512-3/p3V+UfAfeHrT2HMOBVGWyzsvpHZNxlJJ6jQ01XqqxCCQU+szIbrfpsXOHkZ5glMJi+IB/SMJIRt55l/gYWvQ==}
 
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
@@ -2103,6 +2115,8 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
+  appwrite@16.1.0: {}
+
   argparse@2.0.1: {}
 
   babel-dead-code-elimination@1.0.8:
@@ -2450,6 +2464,8 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  material-symbols@0.27.2: {}
 
   merge2@1.4.1: {}
 
