@@ -9,6 +9,7 @@
   margin: 0;
   padding: 0;
   display: flex;
+  border: none;
 }
 
 html {
@@ -36,4 +37,16 @@ img {
 a {
   text-decoration: none;
   color: var(--color-text-primary);
+}
+
+.surface0 {
+  background-color: var(--color-surface0);
+}
+
+.surface1 {
+  background-color: var(--color-surface1);
+}
+
+.surface2 {
+  background-color: var(--color-surface2);
 }

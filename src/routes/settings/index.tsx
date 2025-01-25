@@ -1,17 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-
-import { Card } from 'components/card/card'
-
-import styles from './styles.module.css'
+import { createFileRoute } from "@tanstack/react-router";
 
 export const RouteComponent = () => {
-  return (
-    <>
-      <Card className={styles.card}>Hello</Card>
-    </>
-  )
-}
+  return <div>Settings</div>;
+};
 
-export const Route = createFileRoute('/settings/')({
+export const Route = createFileRoute("/settings/")({
   component: RouteComponent,
-})
+});

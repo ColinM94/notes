@@ -13,6 +13,6 @@ export type RequestResponse<T> = Promise<
 
 export type DatabaseCollection = "notes";
 
-export type DatabaseDocument = {
+export type DocumentMetadata = {
   id: string;
 };

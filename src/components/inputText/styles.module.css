@@ -1,0 +1,13 @@
+.container {
+  padding: var(--spacing-primary);
+  gap: var(--spacing-primary);
+  flex-direction: column;
+  border-radius: var(--roundnesss);
+  background-color: var(--color-surface0);
+
+  .input {
+    padding: var(--spacing-secondary);
+    border-radius: var(--roundnesss);
+    color: var(--color-text-primary);
+  }
+}
