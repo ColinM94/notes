@@ -1,5 +1,4 @@
 import * as React from "react";
-import { createFileRoute } from "@tanstack/react-router";
 
 import { Button } from "components/button/button";
 import { NoteCard } from "components/noteCard/noteCard";
@@ -10,6 +9,7 @@ import { createDocument } from "services/database/createDocument";
 import { Note } from "types/notes";
 
 import styles from "./styles.module.css";
+import { client } from "inits/backend";
 
 export const Notes = () => {
   const [notes, setNotes] = React.useState<Note[]>([]);
@@ -26,7 +26,27 @@ export const Notes = () => {
   };
 
   React.useEffect(() => {
-    loadNotes();
+    // const channel =
+    //   "databases.6781c73400396ac1fcd7.collections.6781c79a003e0fc7938c.documents";
+
+    // const unsubscribe = client.subscribe(channel, (response) => {
+    //   console.log(response);
+
+    //   if (
+    //     response.events.includes("databases.notes.collections.notes.documents")
+    //   ) {
+    //     // Log when a new file is uploaded
+    //   }
+    // });
+
+    const unsubscribe = client.subscribe("files", (response) => {
+      console.log(response.payload);
+      if (response.events.includes("buckets.*.files.*.create")) {
+        // Log when a new file is uploaded
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const handleCreate = async () => {
@@ -36,14 +56,12 @@ export const Notes = () => {
         heading: "test",
       },
     });
-
-    loadNotes();
   };
 
   return (
     <>
       {notes.map((note) => (
-        <NoteCard note={note} />
+        <NoteCard note={note} key={note.id} />
       ))}
 
       <Card className={styles.newNote}>

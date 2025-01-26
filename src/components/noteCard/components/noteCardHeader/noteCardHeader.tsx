@@ -24,7 +24,7 @@ export const NoteCardHeader = (props: Props) => {
 
   return (
     <div className={classes(styles.container, className)}>
-      <div className={styles.heading}>{note.name}</div>
+      <div className={styles.heading}>{note.heading}</div>
       <Button icon="delete" onClick={handleDelete} />
     </div>
   );

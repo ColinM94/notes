@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as NotesIndexImport } from './routes/notes/index'
+import { Route as GamesGamesImport } from './routes/games/games'
 
 // Create/Update Routes
 
@@ -28,10 +29,23 @@ const NotesIndexRoute = NotesIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const GamesGamesRoute = GamesGamesImport.update({
+  id: '/games/games',
+  path: '/games/games',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/games/games': {
+      id: '/games/games'
+      path: '/games/games'
+      fullPath: '/games/games'
+      preLoaderRoute: typeof GamesGamesImport
+      parentRoute: typeof rootRoute
+    }
     '/notes/': {
       id: '/notes/'
       path: '/notes'
@@ -52,36 +66,41 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
+  '/games/games': typeof GamesGamesRoute
   '/notes': typeof NotesIndexRoute
   '/settings': typeof SettingsIndexRoute
 }
 
 export interface FileRoutesByTo {
+  '/games/games': typeof GamesGamesRoute
   '/notes': typeof NotesIndexRoute
   '/settings': typeof SettingsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/games/games': typeof GamesGamesRoute
   '/notes/': typeof NotesIndexRoute
   '/settings/': typeof SettingsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/notes' | '/settings'
+  fullPaths: '/games/games' | '/notes' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/notes' | '/settings'
-  id: '__root__' | '/notes/' | '/settings/'
+  to: '/games/games' | '/notes' | '/settings'
+  id: '__root__' | '/games/games' | '/notes/' | '/settings/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  GamesGamesRoute: typeof GamesGamesRoute
   NotesIndexRoute: typeof NotesIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  GamesGamesRoute: GamesGamesRoute,
   NotesIndexRoute: NotesIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
 }
@@ -96,9 +115,13 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/games/games",
         "/notes/",
         "/settings/"
       ]
+    },
+    "/games/games": {
+      "filePath": "games/games.tsx"
     },
     "/notes/": {
       "filePath": "notes/index.tsx"
