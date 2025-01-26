@@ -2,7 +2,7 @@
 export type Children = React.ReactNode | React.ReactNode[];
 
 export const databaseCollectionIds = {
-  notes: "6781c79a003e0fc7938c",
+  notes: "notes",
 };
 
-export const databaseId = "6781c790001cbdc3b0d9";
+export const databaseId = "notes";

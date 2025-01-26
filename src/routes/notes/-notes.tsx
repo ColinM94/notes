@@ -7,68 +7,67 @@ import { Card } from "components/card/card";
 import { listDocuments } from "services/database/listDocuments";
 import { createDocument } from "services/database/createDocument";
 import { Note } from "types/notes";
+import { useAppStore } from "stores/appStore";
 
 import styles from "./styles.module.css";
-import { client } from "inits/backend";
+import { reactReducer } from "utils/reactReducer";
 
 export const Notes = () => {
-  const [notes, setNotes] = React.useState<Note[]>([]);
-  const [newNoteHeading, setNewNoteHeading] = React.useState("");
+  const { notes, updateAppStore } = useAppStore();
+
+  const [newNote, updateNewNote] = reactReducer<Note>({
+    id: "",
+    heading: "",
+    text: "",
+  });
 
   const loadNotes = async () => {
-    const result = await listDocuments({
+    const result = await listDocuments<Note[]>({
       collection: "notes",
     });
 
     if (result.success) {
-      setNotes(result.data);
+      updateAppStore({
+        notes: result.data,
+      });
     }
   };
 
   React.useEffect(() => {
-    // const channel =
-    //   "databases.6781c73400396ac1fcd7.collections.6781c79a003e0fc7938c.documents";
-
-    // const unsubscribe = client.subscribe(channel, (response) => {
-    //   console.log(response);
-
-    //   if (
-    //     response.events.includes("databases.notes.collections.notes.documents")
-    //   ) {
-    //     // Log when a new file is uploaded
-    //   }
-    // });
-
-    const unsubscribe = client.subscribe("files", (response) => {
-      console.log(response.payload);
-      if (response.events.includes("buckets.*.files.*.create")) {
-        // Log when a new file is uploaded
-      }
-    });
-
-    return () => unsubscribe();
+    loadNotes();
   }, []);
 
   const handleCreate = async () => {
     await createDocument<Note>({
       collection: "notes",
       data: {
-        heading: "test",
+        text: newNote.text,
+        heading: newNote.heading,
       },
     });
+
+    loadNotes();
   };
 
   return (
     <>
       {notes.map((note) => (
-        <NoteCard note={note} key={note.id} />
+        <NoteCard note={note} key={note.$id} />
       ))}
 
       <Card className={styles.newNote}>
         <InputText
-          label="Note Heading"
-          value={newNoteHeading}
-          setValue={(value) => setNewNoteHeading(value)}
+          label="Heading"
+          value={newNote.heading}
+          setValue={(heading) => updateNewNote({ heading })}
+          surface={1}
+        />
+
+        <InputText
+          label="Text"
+          value={newNote.text}
+          setValue={(text) => updateNewNote({ text })}
+          surface={1}
         />
 
         <Button icon="add" label="Create" onClick={handleCreate} surface={1} />

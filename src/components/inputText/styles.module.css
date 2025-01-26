@@ -1,5 +1,4 @@
 .container {
-  padding: var(--spacing-primary);
   gap: var(--spacing-primary);
   flex-direction: column;
   border-radius: var(--roundnesss);

@@ -1,9 +1,4 @@
-.card {
-  width: 100%;
-
-  /* white-space: pre; */
-}
-
 .newNote {
   flex-direction: column;
+  gap: var(--spacing-primary);
 }

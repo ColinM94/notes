@@ -12,6 +12,8 @@ interface Props {
 export const NoteCard = (props: Props) => {
   const { note, className } = props;
 
+  console.log(note);
+
   return (
     <div className={classes(styles.container, className)}>
       <NoteCardHeader note={note} className={styles.header} />
