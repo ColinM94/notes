@@ -4,13 +4,14 @@ import { Button } from "components/button/button";
 import { NoteCard } from "components/noteCard/noteCard";
 import { InputText } from "components/inputText/inputText";
 import { Card } from "components/card/card";
-import { listDocuments } from "services/database/listDocuments";
 import { createDocument } from "services/database/createDocument";
 import { Note } from "types/notes";
 import { useAppStore } from "stores/appStore";
+import { reactReducer } from "utils/reactReducer";
 
 import styles from "./styles.module.css";
-import { reactReducer } from "utils/reactReducer";
+import { loadNotes } from "services/database/loadNotes";
+import { account } from "inits/backend";
 
 export const Notes = () => {
   const { notes, updateAppStore } = useAppStore();
@@ -20,22 +21,6 @@ export const Notes = () => {
     heading: "",
     text: "",
   });
-
-  const loadNotes = async () => {
-    const result = await listDocuments<Note[]>({
-      collection: "notes",
-    });
-
-    if (result.success) {
-      updateAppStore({
-        notes: result.data,
-      });
-    }
-  };
-
-  React.useEffect(() => {
-    loadNotes();
-  }, []);
 
   const handleCreate = async () => {
     await createDocument<Note>({
@@ -48,6 +33,16 @@ export const Notes = () => {
 
     loadNotes();
   };
+
+  React.useEffect(() => {
+    account.get().then((data) =>
+      updateAppStore({
+        user: {
+          email: data.email,
+        },
+      })
+    );
+  }, []);
 
   return (
     <>

@@ -1,4 +1,13 @@
+.header {
+  background-color: var(--color-surface0);
+  width: 100%;
+}
+
 .newNote {
   flex-direction: column;
   gap: var(--spacing-primary);
+}
+
+.refreshButton {
+  margin-left: auto;
 }

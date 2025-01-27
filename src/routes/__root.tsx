@@ -9,13 +9,16 @@ import { Icon } from "components/icon/icon";
 import { classes } from "utils/classes";
 
 import styles from "./styles.module.css";
+import { Header } from "components/header/header";
 
-const component = () => {
+const Root = () => {
   const { pathname } = useLocation();
 
   return (
     <>
       <div className={styles.container}>
+        <Header className={styles.header} />
+
         <div className={styles.content}>
           <Outlet />
         </div>
@@ -49,5 +52,5 @@ const component = () => {
 };
 
 export const Route = createRootRoute({
-  component,
+  component: Root,
 });
