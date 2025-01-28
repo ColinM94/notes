@@ -7,25 +7,21 @@ import styles from "./styles.module.css";
 
 interface Props {
   note: Note;
+  onDeleteClick: () => void;
   className?: string;
 }
 
 export const NoteCardHeader = (props: Props) => {
-  const { note, className } = props;
-
-  const handleDelete = () => {
-    console.log(note.id);
-
-    deleteDocument({
-      collection: "notes",
-      documentId: note.id,
-    });
-  };
+  const { note, onDeleteClick, className } = props;
 
   return (
     <div className={classes(styles.container, className)}>
       <div className={styles.heading}>{note.heading}</div>
-      <Button icon="delete" onClick={handleDelete} />
+      <Button
+        icon="delete"
+        onClick={onDeleteClick}
+        className={styles.deleteButton}
+      />
     </div>
   );
 };

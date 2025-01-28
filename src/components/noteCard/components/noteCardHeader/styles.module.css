@@ -1,2 +1,5 @@
 .container {
+  .deleteButton {
+    margin-left: auto;
+  }
 }

@@ -5,13 +5,14 @@ import { NoteCard } from "components/noteCard/noteCard";
 import { InputText } from "components/inputText/inputText";
 import { Card } from "components/card/card";
 import { createDocument } from "services/database/createDocument";
+import { loadNotes } from "services/database/loadNotes";
 import { Note } from "types/notes";
 import { useAppStore } from "stores/appStore";
 import { reactReducer } from "utils/reactReducer";
+import { account } from "inits/backend";
 
 import styles from "./styles.module.css";
-import { loadNotes } from "services/database/loadNotes";
-import { account } from "inits/backend";
+import { deleteDocument } from "services/database/deleteDocument";
 
 export const Notes = () => {
   const { notes, updateAppStore } = useAppStore();
@@ -44,10 +45,24 @@ export const Notes = () => {
     );
   }, []);
 
+  const handleDelete = async (noteId: string) => {
+    await deleteDocument({
+      collection: "notes",
+      documentId: noteId,
+    });
+
+    loadNotes();
+  };
+
   return (
     <>
       {notes.map((note) => (
-        <NoteCard note={note} key={note.$id} />
+        <NoteCard
+          note={note}
+          key={note.$id}
+          onDeleteClick={() => handleDelete(note.id)}
+          className={styles.note}
+        />
       ))}
 
       <Card className={styles.newNote}>
