@@ -11,7 +11,7 @@ import { reactReducer } from "utils/reactReducer";
 
 import styles from "./styles.module.css";
 import { loadNotes } from "services/database/loadNotes";
-import { account } from "inits/backend";
+import { account, client } from "inits/backend";
 
 export const Notes = () => {
   const { notes, updateAppStore } = useAppStore();
@@ -35,13 +35,11 @@ export const Notes = () => {
   };
 
   React.useEffect(() => {
-    account.get().then((data) =>
-      updateAppStore({
-        user: {
-          email: data.email,
-        },
-      })
-    );
+    const unsubscribe = client.subscribe("collections.notes", (response) => {
+      console.log(response);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   return (

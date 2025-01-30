@@ -1,9 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-export const RouteComponent = () => {
-  return <div>Settings</div>;
-};
+import { Settings } from "./-settings";
 
 export const Route = createFileRoute("/settings/")({
-  component: RouteComponent,
+  component: Settings,
 });

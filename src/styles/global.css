@@ -20,6 +20,7 @@ html {
   color: var(--color-text-primary);
   text-decoration: none;
   font-family: "Roboto";
+  font-size: var(--font-size-body);
 }
 
 html,

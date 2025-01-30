@@ -5,8 +5,9 @@
   background-color: var(--color-surface0);
 
   .input {
-    padding: var(--spacing-secondary);
+    padding: var(--spacing-primary);
     border-radius: var(--roundnesss);
     color: var(--color-text-primary);
+    font-size: var(--font-size-body);
   }
 }

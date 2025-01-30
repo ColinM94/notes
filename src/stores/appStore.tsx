@@ -5,7 +5,7 @@ import { SetStoreState, Store } from "types/zustand";
 
 interface AppStoreState {
   user: {
-    email: string;
+    id: string;
   };
   notes: Note[];
 }
@@ -16,7 +16,7 @@ interface Actions {
 
 export const useAppStore: Store<AppStoreState & Actions> = create((set) => ({
   user: {
-    email: "",
+    id: "",
   },
   notes: [],
   updateAppStore: (update) => set({ ...update }),

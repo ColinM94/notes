@@ -1,0 +1,44 @@
+.container {
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    flex-direction: column;
+    gap: var(--spacing-primary);
+
+    .input {
+    }
+
+    .button {
+    }
+
+    .confirmation {
+      align-items: center;
+      gap: var(--spacing-primary);
+
+      .confirmationIcon {
+        padding: var(--spacing-primary);
+        color: var(--color-success);
+        font-size: var(--font-size-body + --font-size-h3);
+        background-color: var(--color-surface1);
+        border-radius: var(--roundnesss);
+      }
+
+      .confirmationText {
+        flex-direction: column;
+
+        .confirmationTextHeading {
+          font-size: var(--font-size-h2);
+        }
+
+        .confirmationTextSubHeading {
+          font-size: var(--font-size-body);
+          color: var(--color-text-secondary);
+        }
+      }
+    }
+  }
+}
