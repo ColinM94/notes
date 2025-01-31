@@ -5,10 +5,12 @@
 }
 
 * :not(head, script, footer *) {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   display: flex;
+  position: relative;
+  flex-direction: column;
   border: none;
 }
 

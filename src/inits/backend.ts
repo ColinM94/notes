@@ -1,11 +1,3 @@
-import { Account, Client, Databases } from "appwrite";
+import PocketBase from "pocketbase";
 
-export const client = new Client()
-  .setEndpoint("https://cloud.appwrite.io/v1")
-  .setProject("679618060034570be9cf");
-
-export const databases = new Databases(client);
-
-export const account = new Account(client);
-
-export { ID } from "appwrite";
+export const pb = new PocketBase("http://127.0.0.1:8090");

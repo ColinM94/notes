@@ -3,73 +3,102 @@ import * as React from "react";
 import { Button } from "components/button/button";
 import { InputText } from "components/inputText/inputText";
 import { Card } from "components/card/card";
-import { account, ID } from "inits/backend";
-// import { useAppStore } from "stores/appStore";
-import { Icon } from "components/icon/icon";
+import { pb } from "inits/backend";
+import { useAppStore } from "stores/appStore";
+
+import { LoginToggle } from "./components/loginToggle/loginToggle";
 
 import styles from "./styles.module.css";
 
 export const Login = () => {
-  // const { updateAppStore } = useAppStore();
+  const { updateAppStore } = useAppStore();
 
+  const [showSignIn, setShowSignIn] = React.useState(true);
   const [email, setEmail] = React.useState("");
-  const [isSent, setIsSent] = React.useState(false);
+  const [password, setPassword] = React.useState("");
+  const [password2, setPassword2] = React.useState("");
 
-  const handleLogin = async () => {
+  const handleSignIn = async () => {
     try {
-      await account.createMagicURLToken(
-        ID.unique(),
-        email,
-        "http://localhost:5174/notes"
-      );
+      const authData = await pb
+        .collection("users")
+        .authWithPassword(email, password);
 
-      setIsSent(true);
+      updateAppStore({
+        user: {
+          id: authData.record.id,
+          email,
+        },
+      });
     } catch (error) {
       alert(error);
     }
   };
 
-  // const createSession = async () => {
+  const handleSignUp = async () => {
+    try {
+      await pb.collection("users").create({
+        email,
+        password,
+        passwordConfirm: password,
+      });
 
-  // };
-
-  // React.useEffect(() => {
-  //   createSession();
-  // }, []);
+      handleSignIn();
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   return (
     <div className={styles.container}>
       <Card className={styles.card}>
-        {isSent && (
-          <div className={styles.confirmation}>
-            <Icon icon="check" className={styles.confirmationIcon} />
-            <div className={styles.confirmationText}>
-              <div className={styles.confirmationTextHeading}>
-                Link sent to {email}
-              </div>
-              <div className={styles.confirmationTextSubHeading}>
-                You can close this tab
-              </div>
-            </div>
-          </div>
-        )}
-        {!isSent && (
-          <>
-            <InputText
-              value={email}
-              setValue={setEmail}
-              surface={1}
-              className={styles.input}
-            />
+        <LoginToggle
+          showSignIn={showSignIn}
+          setShowSignIn={setShowSignIn}
+          className={styles.toggles}
+        />
 
-            <Button
-              icon="send"
-              label="Send Login Link"
-              onClick={handleLogin}
-              surface={1}
-              className={styles.button}
-            />
-          </>
+        <InputText
+          value={email}
+          setValue={setEmail}
+          surface={1}
+          placeholder="Email"
+        />
+
+        <InputText
+          value={password}
+          setValue={setPassword}
+          placeholder="Password"
+          type="password"
+          surface={1}
+        />
+
+        {!showSignIn && (
+          <InputText
+            value={password2}
+            setValue={setPassword2}
+            placeholder="Re-type Password"
+            type="password"
+            surface={1}
+          />
+        )}
+
+        {showSignIn && (
+          <Button
+            label="Sign In"
+            onClick={handleSignIn}
+            surface={1}
+            className={styles.button}
+          />
+        )}
+
+        {!showSignIn && (
+          <Button
+            label="Sign Up"
+            onClick={handleSignUp}
+            surface={1}
+            className={styles.button}
+          />
         )}
       </Card>
     </div>

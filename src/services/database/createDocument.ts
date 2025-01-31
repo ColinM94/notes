@@ -1,6 +1,5 @@
-import { ID, Models } from "appwrite";
+import { ID } from "appwrite";
 import { databaseCollectionIds, databaseId } from "consts/general";
-import { databases } from "inits/backend";
 import { RequestResponse } from "types/general";
 
 interface Props<T> {
@@ -14,19 +13,19 @@ export const createDocument = async <T>(
   try {
     const id = ID.unique();
 
-    const result = await databases.createDocument(
-      databaseId,
-      databaseCollectionIds[props.collection],
-      id,
-      {
-        ...props.data,
-        id,
-      }
-    );
+    // const result = await databases.createDocument(
+    //   databaseId,
+    //   databaseCollectionIds[props.collection],
+    //   id,
+    //   {
+    //     ...props.data,
+    //     id,
+    //   }
+    // );
 
     return {
       success: true,
-      data: result.$id,
+      // data: result.$id,
     };
   } catch (error) {
     console.log(error);

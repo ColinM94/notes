@@ -10,7 +10,6 @@ import { deleteDocument } from "services/database/deleteDocument";
 import { useAppStore } from "stores/appStore";
 import { Note } from "types/notes";
 import { reactReducer } from "utils/reactReducer";
-import { client } from "inits/backend";
 
 import styles from "./styles.module.css";
 
@@ -35,13 +34,13 @@ export const Notes = () => {
     loadNotes();
   };
 
-  React.useEffect(() => {
-    const unsubscribe = client.subscribe("collections.notes", (response) => {
-      console.log(response);
-    });
+  // React.useEffect(() => {
+  //   const unsubscribe = client.subscribe("collections.notes", (response) => {
+  //     console.log(response);
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
 
   const handleDelete = async (noteId: string) => {
     await deleteDocument({
