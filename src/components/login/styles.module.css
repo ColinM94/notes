@@ -9,13 +9,17 @@
     gap: var(--spacing-primary);
     width: min(300px, 100%);
 
-    .toggles {
-      margin-bottom: calc(var(--spacing-primary) * 2);
-    }
+    .form {
+      gap: var(--spacing-primary);
 
-    .button {
-      margin-top: var(--spacing-primary);
-      background-color: var(--color-primary);
+      .toggles {
+        margin-bottom: calc(var(--spacing-primary) * 2);
+      }
+
+      .button {
+        margin-top: var(--spacing-primary);
+        background-color: var(--color-primary);
+      }
     }
   }
 }

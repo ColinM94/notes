@@ -52,54 +52,59 @@ export const Login = () => {
   return (
     <div className={styles.container}>
       <Card className={styles.card}>
-        <LoginToggle
-          showSignIn={showSignIn}
-          setShowSignIn={setShowSignIn}
-          className={styles.toggles}
-        />
+        <form
+          onSubmit={showSignIn ? handleSignIn : handleSignUp}
+          className={styles.form}
+        >
+          <LoginToggle
+            showSignIn={showSignIn}
+            setShowSignIn={setShowSignIn}
+            className={styles.toggles}
+          />
 
-        <InputText
-          value={email}
-          setValue={setEmail}
-          surface={1}
-          placeholder="Email"
-        />
-
-        <InputText
-          value={password}
-          setValue={setPassword}
-          placeholder="Password"
-          type="password"
-          surface={1}
-        />
-
-        {!showSignIn && (
           <InputText
-            value={password2}
-            setValue={setPassword2}
-            placeholder="Re-type Password"
+            value={email}
+            setValue={setEmail}
+            surface={1}
+            placeholder="Email"
+          />
+
+          <InputText
+            value={password}
+            setValue={setPassword}
+            placeholder="Password"
             type="password"
             surface={1}
           />
-        )}
 
-        {showSignIn && (
-          <Button
-            label="Sign In"
-            onClick={handleSignIn}
-            surface={1}
-            className={styles.button}
-          />
-        )}
+          {!showSignIn && (
+            <InputText
+              value={password2}
+              setValue={setPassword2}
+              placeholder="Re-type Password"
+              type="password"
+              surface={1}
+            />
+          )}
 
-        {!showSignIn && (
-          <Button
-            label="Sign Up"
-            onClick={handleSignUp}
-            surface={1}
-            className={styles.button}
-          />
-        )}
+          {showSignIn && (
+            <Button
+              label="Sign In"
+              onClick={handleSignIn}
+              surface={1}
+              className={styles.button}
+            />
+          )}
+
+          {!showSignIn && (
+            <Button
+              label="Sign Up"
+              onClick={handleSignUp}
+              surface={1}
+              className={styles.button}
+            />
+          )}
+        </form>
       </Card>
     </div>
   );

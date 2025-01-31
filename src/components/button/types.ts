@@ -1,6 +1,6 @@
 import { MaterialSymbol } from "material-symbols";
 
-export interface Props {
+export interface ButtonProps {
   icon?: MaterialSymbol;
   label?: string;
   onClick: () => void;

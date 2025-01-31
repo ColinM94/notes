@@ -1,10 +1,10 @@
 import { classes } from "utils/classes";
 import { Icon } from "components/icon/icon";
 
-import { Props } from "./types";
+import { ButtonProps } from "./types";
 import styles from "./styles.module.css";
 
-export const Button = (props: Props) => {
+export const Button = (props: ButtonProps) => {
   const {
     icon,
     label,
