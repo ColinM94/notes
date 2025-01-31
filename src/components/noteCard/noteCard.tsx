@@ -6,17 +6,20 @@ import styles from "./styles.module.css";
 
 interface Props {
   note: Note;
+  onDeleteClick: () => void;
   className?: string;
 }
 
 export const NoteCard = (props: Props) => {
-  const { note, className } = props;
-
-  console.log(note);
+  const { note, onDeleteClick, className } = props;
 
   return (
     <div className={classes(styles.container, className)}>
-      <NoteCardHeader note={note} className={styles.header} />
+      <NoteCardHeader
+        note={note}
+        onDeleteClick={onDeleteClick}
+        className={styles.header}
+      />
 
       <div className={styles.app}>{note.text}</div>
     </div>

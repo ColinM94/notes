@@ -5,16 +5,17 @@ import { NoteCard } from "components/noteCard/noteCard";
 import { InputText } from "components/inputText/inputText";
 import { Card } from "components/card/card";
 import { createDocument } from "services/database/createDocument";
-import { Note } from "types/notes";
+import { loadNotes } from "services/database/loadNotes";
+import { deleteDocument } from "services/database/deleteDocument";
 import { useAppStore } from "stores/appStore";
+import { Note } from "types/notes";
 import { reactReducer } from "utils/reactReducer";
+import { client } from "inits/backend";
 
 import styles from "./styles.module.css";
-import { loadNotes } from "services/database/loadNotes";
-import { account, client } from "inits/backend";
 
 export const Notes = () => {
-  const { notes, updateAppStore } = useAppStore();
+  const { notes } = useAppStore();
 
   const [newNote, updateNewNote] = reactReducer<Note>({
     id: "",
@@ -42,10 +43,24 @@ export const Notes = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleDelete = async (noteId: string) => {
+    await deleteDocument({
+      collection: "notes",
+      documentId: noteId,
+    });
+
+    loadNotes();
+  };
+
   return (
     <>
       {notes.map((note) => (
-        <NoteCard note={note} key={note.$id} />
+        <NoteCard
+          note={note}
+          key={note.$id}
+          onDeleteClick={() => handleDelete(note.id)}
+          className={styles.note}
+        />
       ))}
 
       <Card className={styles.newNote}>
