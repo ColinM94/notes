@@ -18,8 +18,21 @@ export const Login = () => {
   const [password, setPassword] = React.useState("");
   const [password2, setPassword2] = React.useState("");
 
-  const handleSignIn = async () => {
+  const handleSubmit = async () => {
     try {
+      if (!email) throw "No email entered";
+      if (!password) throw "No password entered";
+
+      if (!showSignIn) {
+        if (!password2) throw "No re-typed password";
+
+        await pb.collection("users").create({
+          email,
+          password,
+          passwordConfirm: password,
+        });
+      }
+
       const authData = await pb
         .collection("users")
         .authWithPassword(email, password);
@@ -31,31 +44,14 @@ export const Login = () => {
         },
       });
     } catch (error) {
-      alert(error);
-    }
-  };
-
-  const handleSignUp = async () => {
-    try {
-      await pb.collection("users").create({
-        email,
-        password,
-        passwordConfirm: password,
-      });
-
-      handleSignIn();
-    } catch (error) {
-      alert(error);
+      alert(String(error));
     }
   };
 
   return (
     <div className={styles.container}>
       <Card className={styles.card}>
-        <form
-          onSubmit={showSignIn ? handleSignIn : handleSignUp}
-          className={styles.form}
-        >
+        <form onSubmit={handleSubmit} className={styles.form}>
           <LoginToggle
             showSignIn={showSignIn}
             setShowSignIn={setShowSignIn}
@@ -87,23 +83,12 @@ export const Login = () => {
             />
           )}
 
-          {showSignIn && (
-            <Button
-              label="Sign In"
-              onClick={handleSignIn}
-              surface={1}
-              className={styles.button}
-            />
-          )}
-
-          {!showSignIn && (
-            <Button
-              label="Sign Up"
-              onClick={handleSignUp}
-              surface={1}
-              className={styles.button}
-            />
-          )}
+          <Button
+            label={showSignIn ? "Sign In" : "Sign Up"}
+            onClick={handleSubmit}
+            surface={1}
+            className={styles.button}
+          />
         </form>
       </Card>
     </div>
