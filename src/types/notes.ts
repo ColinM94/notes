@@ -1,6 +1,7 @@
-import { Models } from "appwrite";
+import { DatabaseRecord } from "./general";
 
-export interface Note extends Models.Document {
+export interface Note extends DatabaseRecord {
   heading: string;
   text: string;
+  userId: string;
 }

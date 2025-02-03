@@ -5,6 +5,7 @@
   cursor: pointer;
   border-radius: var(--roundnesss);
   justify-content: center;
+  flex-direction: row;
 
   .icon {
     color: var(--color-text-primary);

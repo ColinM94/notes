@@ -1,57 +1,18 @@
 import * as React from "react";
-import {
-  createRootRoute,
-  Link,
-  Outlet,
-  useLocation,
-} from "@tanstack/react-router";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 
-import { Icon } from "components/icon/icon";
 import { Header } from "components/header/header";
-import { classes } from "utils/classes";
 import { useAppStore } from "stores/appStore";
 import { Login } from "components/login/login";
-
-import styles from "./styles.module.css";
 import { pb } from "inits/backend";
 
+import styles from "./styles.module.css";
+import { Navbar } from "components/navbar/navbar";
+
 const Root = () => {
-  const { pathname } = useLocation();
   const { user, updateAppStore } = useAppStore();
 
   const [isInitialising, setIsInitialising] = React.useState(true);
-
-  // const initialise = async () => {
-  //   let session: Models.Session | undefined;
-
-  //   try {
-  //     session = await account.getSession("current");
-  //   } catch (error) {
-  //     console.log(String(error));
-  //   }
-
-  //   try {
-  //     if (!session) {
-  //       const urlParams = new URLSearchParams(window.location.search);
-  //       const secret = urlParams.get("secret");
-  //       const userId = urlParams.get("userId");
-
-  //       if (!secret || !userId) throw "Missing secret or userId";
-
-  //       session = await account.createSession(userId, secret);
-  //     }
-  //   } catch (error) {
-  //     console.log(String(error));
-  //   }
-
-  //   updateAppStore({
-  //     user: {
-  //       id: session?.userId || "",
-  //     },
-  //   });
-
-  //   setIsInitialising(false);
-  // };
 
   const initialise = () => {
     if (pb.authStore.isValid) {
@@ -81,29 +42,9 @@ const Root = () => {
         <div className={styles.content}>
           <Outlet />
         </div>
-
-        <div className={styles.nav}>
-          <Link
-            to="/notes"
-            className={classes(
-              styles.link,
-              pathname.includes("/notes") && styles.linkActive
-            )}
-          >
-            <Icon icon="notes" />
-          </Link>
-
-          <Link
-            to="/settings"
-            className={classes(
-              styles.link,
-              pathname.includes("/settings") && styles.linkActive
-            )}
-          >
-            <Icon icon="settings" />
-          </Link>
-        </div>
       </div>
+
+      <Navbar />
 
       {/* <TanStackRouterDevtools /> */}
     </>

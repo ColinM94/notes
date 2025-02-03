@@ -1,15 +1,17 @@
 import { Note } from "types/notes";
-import { listDocuments } from "./listDocuments";
 import { useAppStore } from "stores/appStore";
+import { listRecords } from "./listRecords";
 
 export const loadNotes = async () => {
-  const result = await listDocuments<Note[]>({
+  const { updateAppStore } = useAppStore.getState();
+
+  const response = await listRecords<Note>({
     collection: "notes",
   });
 
-  if (result.success) {
-    useAppStore.getState().updateAppStore({
-      notes: result.data,
+  if (response.success) {
+    updateAppStore({
+      notes: response.data,
     });
   }
 };

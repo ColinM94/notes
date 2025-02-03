@@ -9,6 +9,7 @@ import { useAppStore } from "stores/appStore";
 import { LoginToggle } from "./components/loginToggle/loginToggle";
 
 import styles from "./styles.module.css";
+import { FormSubmitEvent } from "types/general";
 
 export const Login = () => {
   const { updateAppStore } = useAppStore();
@@ -18,8 +19,10 @@ export const Login = () => {
   const [password, setPassword] = React.useState("");
   const [password2, setPassword2] = React.useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormSubmitEvent) => {
     try {
+      e.preventDefault();
+
       if (!email) throw "No email entered";
       if (!password) throw "No password entered";
 

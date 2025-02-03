@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  flex-direction: column;
+  flex: 1;
 
   .header {
     width: 100%;
@@ -13,23 +13,5 @@
     align-items: flex-start;
     padding: var(--spacing-primary);
     flex-direction: column;
-  }
-
-  .nav {
-    background-color: var(--color-surface0);
-
-    .link {
-      flex: 1;
-      justify-content: center;
-      padding: var(--spacing-primary);
-
-      &:hover {
-        background-color: var(--color-surface1);
-      }
-    }
-
-    .linkActive {
-      background-color: var(--color-surface1);
-    }
   }
 }

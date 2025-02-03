@@ -4,7 +4,6 @@
 }
 
 .newNote {
-  flex-direction: column;
   gap: var(--spacing-primary);
 }
 
@@ -14,4 +13,8 @@
 
 .note {
   width: 100%;
+}
+
+.newNoteForm {
+  gap: var(--spacing-primary);
 }

@@ -1,54 +1,65 @@
 import * as React from "react";
+import { UnsubscribeFunc } from "pocketbase";
 
 import { Button } from "components/button/button";
 import { NoteCard } from "components/noteCard/noteCard";
 import { InputText } from "components/inputText/inputText";
 import { Card } from "components/card/card";
-import { createDocument } from "services/database/createDocument";
-import { loadNotes } from "services/database/loadNotes";
-import { deleteDocument } from "services/database/deleteDocument";
+import { createRecord } from "services/database/createRecord";
+import { deleteRecord } from "services/database/deleteRecord";
+import { subscribeToCollection } from "services/database/subscribeToCollection";
 import { useAppStore } from "stores/appStore";
 import { Note } from "types/notes";
+import { FormSubmitEvent } from "types/general";
 import { reactReducer } from "utils/reactReducer";
 
 import styles from "./styles.module.css";
 
 export const Notes = () => {
-  const { notes } = useAppStore();
+  const { user } = useAppStore();
 
   const [newNote, updateNewNote] = reactReducer<Note>({
     id: "",
     heading: "",
     text: "",
+    userId: user.id,
   });
 
-  const handleCreate = async () => {
-    await createDocument<Note>({
-      collection: "notes",
-      data: {
-        text: newNote.text,
-        heading: newNote.heading,
-      },
-    });
+  const [notes, setNotes] = React.useState<Note[]>([]);
 
-    loadNotes();
-  };
+  React.useEffect(() => {
+    let unsubscribe: UnsubscribeFunc | undefined;
 
-  // React.useEffect(() => {
-  //   const unsubscribe = client.subscribe("collections.notes", (response) => {
-  //     console.log(response);
-  //   });
+    (async () => {
+      unsubscribe = await subscribeToCollection({
+        collection: "notes",
+        setData: setNotes,
+      });
+    })();
 
-  //   return () => unsubscribe();
-  // }, []);
+    return () => {
+      unsubscribe?.();
+    };
+  }, []);
+
+  console.log(user.id);
 
   const handleDelete = async (noteId: string) => {
-    await deleteDocument({
+    await deleteRecord({
       collection: "notes",
-      documentId: noteId,
+      id: noteId,
     });
+  };
 
-    loadNotes();
+  const handleSubmit = async (event?: FormSubmitEvent) => {
+    event?.preventDefault();
+
+    if (!newNote.heading || !newNote.text) return;
+
+    await createRecord<Note>({
+      collection: "notes",
+      data: newNote,
+    });
   };
 
   return (
@@ -56,28 +67,35 @@ export const Notes = () => {
       {notes.map((note) => (
         <NoteCard
           note={note}
-          key={note.$id}
+          key={note.id}
           onDeleteClick={() => handleDelete(note.id)}
           className={styles.note}
         />
       ))}
 
       <Card className={styles.newNote}>
-        <InputText
-          label="Heading"
-          value={newNote.heading}
-          setValue={(heading) => updateNewNote({ heading })}
-          surface={1}
-        />
+        <form onSubmit={handleSubmit} className={styles.newNoteForm}>
+          <InputText
+            label="Heading"
+            value={newNote.heading}
+            setValue={(heading) => updateNewNote({ heading })}
+            surface={1}
+          />
 
-        <InputText
-          label="Text"
-          value={newNote.text}
-          setValue={(text) => updateNewNote({ text })}
-          surface={1}
-        />
+          <InputText
+            label="Text"
+            value={newNote.text}
+            setValue={(text) => updateNewNote({ text })}
+            surface={1}
+          />
 
-        <Button icon="add" label="Create" onClick={handleCreate} surface={1} />
+          <Button
+            icon="add"
+            label="Create"
+            onClick={handleSubmit}
+            surface={1}
+          />
+        </form>
       </Card>
     </>
   );

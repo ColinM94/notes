@@ -1,5 +1,3 @@
-import { Button } from "components/button/button";
-import { loadNotes } from "services/database/loadNotes";
 import { classes } from "utils/classes";
 import { useAppStore } from "stores/appStore";
 
@@ -11,9 +9,9 @@ export const Header = (props: Props) => {
 
   const { user } = useAppStore();
 
-  const handleRefresh = () => {
-    loadNotes();
-  };
+  // const handleRefresh = () => {
+  //   loadNotes();
+  // };
 
   return (
     <div className={classes(styles.container, className)}>
@@ -21,12 +19,12 @@ export const Header = (props: Props) => {
         {user.email || "colin.maher94@gmail.com"}
       </div>
 
-      <Button
+      {/* <Button
         icon="refresh"
-        onClick={handleRefresh}
+        // onClick={handleRefresh}
         surface={1}
         className={styles.refreshButton}
-      />
+      /> */}
     </div>
   );
 };
