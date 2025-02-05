@@ -1,5 +1,6 @@
 import { pb } from "inits/backend";
 import { Collection, RequestResponse } from "types/general";
+import { trackError } from "utils/trackError";
 
 interface Params {
   collection: Collection;
@@ -22,7 +23,10 @@ export const deleteRecord = async (
       success: true,
     };
   } catch (error) {
-    alert(error);
+    trackError({
+      error,
+      source: "deleteRecord",
+    });
     return {
       success: false,
     };

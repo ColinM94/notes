@@ -1,6 +1,7 @@
 import { pb } from "inits/backend";
 import { RecordModel } from "pocketbase";
 import { Collection, RequestResponse } from "types/general";
+import { trackError } from "utils/trackError";
 
 interface Params<T> {
   data: Omit<T, "id" | "createdAt" | "updatedAt">;
@@ -20,7 +21,11 @@ export const createRecord = async <T>(
       success: true,
     };
   } catch (error) {
-    alert(error);
+    trackError({
+      error,
+      source: "createRecord",
+    });
+
     return {
       success: false,
     };

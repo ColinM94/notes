@@ -21,6 +21,26 @@ export const Navbar = () => {
       </Link>
 
       <Link
+        to="/calendar"
+        className={classes(
+          styles.link,
+          pathname.includes("/calendar") && styles.linkActive
+        )}
+      >
+        <Icon icon="calendar_month" />
+      </Link>
+
+      <Link
+        to="/tasks"
+        className={classes(
+          styles.link,
+          pathname.includes("/tasks") && styles.linkActive
+        )}
+      >
+        <Icon icon="checklist" />
+      </Link>
+
+      <Link
         to="/settings"
         className={classes(
           styles.link,

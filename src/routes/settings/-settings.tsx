@@ -19,8 +19,12 @@ export const Settings = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Button label="Sign Out" onClick={handleSignOut} />
-    </div>
+    <>
+      <Button
+        label="Sign Out"
+        onClick={handleSignOut}
+        className={styles.signOutButton}
+      />
+    </>
   );
 };

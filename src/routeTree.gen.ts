@@ -11,10 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TasksIndexImport } from './routes/tasks/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as NotesIndexImport } from './routes/notes/index'
+import { Route as CalendarIndexImport } from './routes/calendar/index'
 
 // Create/Update Routes
+
+const TasksIndexRoute = TasksIndexImport.update({
+  id: '/tasks/',
+  path: '/tasks/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const SettingsIndexRoute = SettingsIndexImport.update({
   id: '/settings/',
@@ -28,10 +36,23 @@ const NotesIndexRoute = NotesIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const CalendarIndexRoute = CalendarIndexImport.update({
+  id: '/calendar/',
+  path: '/calendar/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/calendar/': {
+      id: '/calendar/'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/notes/': {
       id: '/notes/'
       path: '/notes'
@@ -46,44 +67,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/tasks/': {
+      id: '/tasks/'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
+  '/calendar': typeof CalendarIndexRoute
   '/notes': typeof NotesIndexRoute
   '/settings': typeof SettingsIndexRoute
+  '/tasks': typeof TasksIndexRoute
 }
 
 export interface FileRoutesByTo {
+  '/calendar': typeof CalendarIndexRoute
   '/notes': typeof NotesIndexRoute
   '/settings': typeof SettingsIndexRoute
+  '/tasks': typeof TasksIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/calendar/': typeof CalendarIndexRoute
   '/notes/': typeof NotesIndexRoute
   '/settings/': typeof SettingsIndexRoute
+  '/tasks/': typeof TasksIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/notes' | '/settings'
+  fullPaths: '/calendar' | '/notes' | '/settings' | '/tasks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/notes' | '/settings'
-  id: '__root__' | '/notes/' | '/settings/'
+  to: '/calendar' | '/notes' | '/settings' | '/tasks'
+  id: '__root__' | '/calendar/' | '/notes/' | '/settings/' | '/tasks/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  CalendarIndexRoute: typeof CalendarIndexRoute
   NotesIndexRoute: typeof NotesIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
+  TasksIndexRoute: typeof TasksIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  CalendarIndexRoute: CalendarIndexRoute,
   NotesIndexRoute: NotesIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
+  TasksIndexRoute: TasksIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -96,15 +134,23 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/calendar/",
         "/notes/",
-        "/settings/"
+        "/settings/",
+        "/tasks/"
       ]
+    },
+    "/calendar/": {
+      "filePath": "calendar/index.tsx"
     },
     "/notes/": {
       "filePath": "notes/index.tsx"
     },
     "/settings/": {
       "filePath": "settings/index.tsx"
+    },
+    "/tasks/": {
+      "filePath": "tasks/index.tsx"
     }
   }
 }

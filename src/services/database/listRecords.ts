@@ -1,5 +1,6 @@
 import { pb } from "inits/backend";
 import { Collection, RequestResponse } from "types/general";
+import { trackError } from "utils/trackError";
 
 interface Params {
   collection: Collection;
@@ -19,7 +20,10 @@ export const listRecords = async <T>(params: Params): RequestResponse<T[]> => {
       success: true,
     };
   } catch (error) {
-    alert(error);
+    trackError({
+      error,
+      source: "listRecords",
+    });
     return {
       success: false,
     };

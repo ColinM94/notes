@@ -1,3 +1,5 @@
-.container {
-  flex-direction: column;
+.signOutButton {
+  width: 100%;
+  margin-top: auto;
+  background-color: var(--color-danger) !important;
 }
