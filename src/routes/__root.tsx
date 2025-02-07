@@ -1,13 +1,12 @@
 import * as React from "react";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 
-import { Header } from "components/header/header";
 import { useAppStore } from "stores/appStore";
 import { Login } from "components/login/login";
+import { Navbar } from "components/navbar/navbar";
 import { pb } from "inits/backend";
 
 import styles from "./styles.module.css";
-import { Navbar } from "components/navbar/navbar";
 
 const Root = () => {
   const { user, updateAppStore } = useAppStore();
@@ -18,7 +17,7 @@ const Root = () => {
     if (pb.authStore.isValid) {
       updateAppStore({
         user: {
-          id: pb.authStore.record?.id,
+          id: pb.authStore.record?.id || "",
         },
       });
     }
@@ -37,7 +36,7 @@ const Root = () => {
   return (
     <>
       <div className={styles.container}>
-        <Header className={styles.header} />
+        {/* <Header className={styles.header} /> */}
 
         <div className={styles.content}>
           <Outlet />

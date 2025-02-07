@@ -6,7 +6,6 @@ import { SetStoreState, Store } from "types/zustand";
 interface AppStoreState {
   user: {
     id: string;
-    email: string;
   };
   notes: Note[];
 }

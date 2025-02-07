@@ -13,7 +13,6 @@ export const Settings = () => {
     updateAppStore({
       user: {
         id: "",
-        email: "",
       },
     });
   };

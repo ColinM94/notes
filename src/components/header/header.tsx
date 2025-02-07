@@ -9,22 +9,11 @@ export const Header = (props: Props) => {
 
   const { user } = useAppStore();
 
-  // const handleRefresh = () => {
-  //   loadNotes();
-  // };
-
   return (
     <div className={classes(styles.container, className)}>
       <div className={styles.email}>
         {user.email || "colin.maher94@gmail.com"}
       </div>
-
-      {/* <Button
-        icon="refresh"
-        // onClick={handleRefresh}
-        surface={1}
-        className={styles.refreshButton}
-      /> */}
     </div>
   );
 };
