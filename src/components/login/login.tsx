@@ -19,9 +19,9 @@ export const Login = () => {
   const [password, setPassword] = React.useState("");
   const [password2, setPassword2] = React.useState("");
 
-  const handleSubmit = async (e: FormSubmitEvent) => {
+  const handleSubmit = async (e?: FormSubmitEvent) => {
     try {
-      e.preventDefault();
+      e?.preventDefault();
 
       if (!email) throw "No email entered";
       if (!password) throw "No password entered";
@@ -43,7 +43,6 @@ export const Login = () => {
       updateAppStore({
         user: {
           id: authData.record.id,
-          email,
         },
       });
     } catch (error) {

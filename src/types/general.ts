@@ -20,7 +20,7 @@ export type DocumentMetadata = {
 // React
 export type Children = React.ReactNode | React.ReactNode[];
 
-export type Collection = "notes" | "users";
+export type Collection = "notes" | "users" | "tasks";
 
 export type FormSubmitEvent = React.FormEvent<HTMLFormElement>;
 

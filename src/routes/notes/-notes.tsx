@@ -42,8 +42,6 @@ export const Notes = () => {
     };
   }, []);
 
-  console.log(user.id);
-
   const handleDelete = async (noteId: string) => {
     await deleteRecord({
       collection: "notes",

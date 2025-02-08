@@ -1,95 +1,117 @@
 import * as React from "react";
 import { Task } from "types/tasks";
+import { UnsubscribeFunc } from "pocketbase";
 
 import { reactReducer } from "utils/reactReducer";
 import { Button } from "components/button/button";
 import { Card } from "components/card/card";
 import { InputText } from "components/inputText/inputText";
 import { InputCheckbox } from "components/inputCheckbox/inputCheckbox";
+import { subscribeToCollection } from "services/database/subscribeToCollection";
+import { createRecord } from "services/database/createRecord";
+import { deleteRecord } from "services/database/deleteRecord";
+import { FormSubmitEvent } from "types/general";
+import { useAppStore } from "stores/appStore";
 
 import styles from "./styles.module.css";
 
-const defaultTask = (): Task => {
+const defaultTask = (userId: string): Task => {
   return {
     id: "",
     name: "",
     description: "",
-    type: "daily",
+    frequency: "daily",
     completed: false,
+    userId,
   };
 };
+
 export const Tasks = () => {
+  const { user } = useAppStore();
+
   const [tasks, setTasks] = React.useState<Task[]>([]);
 
-  const [newTask, updateNewTask] = reactReducer<Task>({
-    id: "",
-    name: "",
-    description: "",
-    type: "daily",
-    completed: false,
-  });
+  const [newTask, updateNewTask] = reactReducer<Task>(defaultTask(user.id));
 
-  const handleCreateTask = () => {
-    setTasks([...tasks, newTask]);
+  React.useEffect(() => {
+    let unsubscribe: UnsubscribeFunc | undefined;
 
-    updateNewTask(defaultTask());
+    (async () => {
+      unsubscribe = await subscribeToCollection<Task>({
+        collection: "tasks",
+        setData: setTasks,
+      });
+    })();
+
+    return () => {
+      unsubscribe?.();
+    };
+  }, []);
+
+  const handleDelete = async (taskId: string) => {
+    await deleteRecord({
+      collection: "tasks",
+      id: taskId,
+    });
+  };
+
+  const handleSubmit = async (event?: FormSubmitEvent) => {
+    event?.preventDefault();
+
+    if (!newTask) return;
+
+    await createRecord<Task>({
+      collection: "tasks",
+      data: newTask,
+    });
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.tasks}>
-        {tasks.map((task) => (
-          <div key={task.id} className={styles.task}>
-            <div className={styles.name}>{task.name}</div>
+      {tasks.map((task) => (
+        <div key={task.id} className={styles.task}>
+          <div className={styles.name}>{task.description}</div>
 
-            <InputCheckbox
-              value={task.completed}
-              setValue={(completed) =>
-                updateNewTask({
-                  completed,
-                })
-              }
-              className={styles.checkbox}
-            />
-          </div>
-        ))}
-      </div>
+          <InputCheckbox
+            value={task.completed}
+            setValue={(completed) =>
+              updateNewTask({
+                completed,
+              })
+            }
+            className={styles.checkbox}
+          />
+
+          <Button icon="delete" onClick={() => handleDelete(task.id)} />
+        </div>
+      ))}
 
       <Card className={styles.createTaskCard}>
-        <InputText
-          value={newTask.id}
-          setValue={(id) =>
-            updateNewTask({
-              id,
-            })
-          }
-          surface={1}
-          placeholder="ID"
-        />
+        <form onSubmit={handleSubmit} className={styles.createTaskForm}>
+          <InputText
+            value={newTask.name}
+            setValue={(name) =>
+              updateNewTask({
+                name,
+              })
+            }
+            surface={1}
+            placeholder="Name"
+          />
 
-        <InputText
-          value={newTask.name}
-          setValue={(name) =>
-            updateNewTask({
-              name,
-            })
-          }
-          surface={1}
-          placeholder="Name"
-        />
+          <InputText
+            value={newTask.description}
+            setValue={(description) =>
+              updateNewTask({
+                description,
+              })
+            }
+            surface={1}
+            placeholder="Description"
+          />
 
-        <InputText
-          value={newTask.description}
-          setValue={(description) =>
-            updateNewTask({
-              description,
-            })
-          }
-          surface={1}
-          placeholder="Description"
-        />
-
-        <Button label="Create Task" surface={1} onClick={handleCreateTask} />
+          <Button label="Create Task" surface={1} onClick={handleSubmit} />
+        </form>
       </Card>
     </div>
   );

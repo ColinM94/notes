@@ -5,23 +5,24 @@
 
 .container {
   gap: var(--spacing-primary);
+  width: 100%;
 
-  .tasks {
+  .task {
+    flex-direction: row;
     gap: var(--spacing-primary);
+    align-items: center;
+    padding: var(--spacing-primary);
+    background-color: var(--color-surface0);
 
-    .task {
-      flex-direction: row;
-      gap: var(--spacing-primary);
-      align-items: center;
-      padding: var(--spacing-primary);
-      background-color: var(--color-surface0);
-
-      .name {
-        flex: 1;
-      }
-
-      .checkbox {
-      }
+    .name {
+      flex: 1;
     }
+
+    .checkbox {
+    }
+  }
+
+  .createTaskForm {
+    gap: var(--spacing-primary);
   }
 }

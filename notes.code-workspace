@@ -13,13 +13,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "workbench.editor.labelFormat": "short",
     "material-icon-theme.folders.associations": {
-      "src/app": "console",
-      "src/tool": "tools",
-      "src/shared": "global",
       "consts": "constant",
       "stores": "server",
       "inits": "Azure-pipelines",
-      "init/tool": "tools",
     },
     "material-icon-theme.files.associations": {
       "tsconfig.tool.json": "tsconfig",
