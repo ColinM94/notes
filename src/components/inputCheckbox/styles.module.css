@@ -4,6 +4,7 @@
   border-radius: var(--roundnesss);
   background-color: var(--color-surface0);
   align-items: center;
+  cursor: pointer;
 
   .icon {
   }

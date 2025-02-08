@@ -64,6 +64,8 @@ export const Tasks = () => {
       collection: "tasks",
       data: newTask,
     });
+
+    updateNewTask(defaultTask(user.id));
   };
 
   return (
