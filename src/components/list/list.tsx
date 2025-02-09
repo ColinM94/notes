@@ -26,7 +26,17 @@ export const List = <T,>(props: Props<T>) => {
   React.useEffect(() => {
     const handleMouseUp = (e: MouseEvent) => {
       e.preventDefault();
+
+      if (dropZone === null || draggedIndex === null) return;
+
+      const tempItems = items;
+      const tempItem = items[dropZone];
+
+      tempItems[dropZone] = items[draggedIndex];
+      tempItems[draggedIndex] = tempItem;
+
       setDraggedIndex(null);
+      setDropZone(null);
     };
 
     document.addEventListener("mouseup", handleMouseUp);
@@ -40,7 +50,9 @@ export const List = <T,>(props: Props<T>) => {
       const absDifferences = positions.map((v) => Math.abs(v - mouse[1]));
       let result = absDifferences.indexOf(Math.min(...absDifferences));
 
-      // if (result > dragged) result += 1;
+      console.log(result);
+
+      //   if (result > draggedIndex) result += 1;
 
       setDropZone(result);
     }
@@ -52,8 +64,8 @@ export const List = <T,>(props: Props<T>) => {
         const isDragged = draggedIndex === index;
 
         return (
-          <>
-            {!isDragged && (
+          <React.Fragment key={keyExtractor(item)}>
+            {dropZone !== null && isDragged !== null && (
               <div
                 className={classes(
                   "dropZone",
@@ -63,7 +75,6 @@ export const List = <T,>(props: Props<T>) => {
             )}
 
             <div
-              key={keyExtractor(item)}
               onMouseDown={(e) => {
                 e.preventDefault();
                 setDraggedIndex(index);
@@ -78,7 +89,16 @@ export const List = <T,>(props: Props<T>) => {
             >
               {item.description}
             </div>
-          </>
+
+            {index === items.length && (
+              <div
+                className={classes(
+                  "dropZone",
+                  dropZone === index ? styles.dropZone : styles.dropZoneHidden
+                )}
+              />
+            )}
+          </React.Fragment>
         );
       })}
     </div>
