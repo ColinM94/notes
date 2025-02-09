@@ -1,10 +1,11 @@
 .container {
   gap: var(--spacing-primary);
   flex-direction: row;
-  border-radius: var(--roundnesss);
+  border-radius: var(--roundness);
   background-color: var(--color-surface0);
   align-items: center;
   cursor: pointer;
+  user-select: none;
 
   .icon {
   }

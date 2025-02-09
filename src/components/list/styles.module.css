@@ -1,0 +1,25 @@
+.container {
+  .dropZone {
+    background-color: var(--color-surface3);
+    height: calc(var(--spacing-primary) * 3);
+    transition: height 0.3s;
+  }
+
+  .dropZoneHidden {
+    height: 0px;
+    transition: height 0.3s;
+  }
+
+  .item {
+    border-radius: var(--roundness);
+    padding: var(--spacing-primary);
+    background-color: var(--color-surface0);
+    cursor: move;
+  }
+
+  .draggedItem {
+    position: absolute;
+    z-index: 99;
+    width: 100%;
+  }
+}

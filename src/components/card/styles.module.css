@@ -1,5 +1,5 @@
 .container {
   padding: var(--spacing-primary);
-  border-radius: var(--roundnesss);
+  border-radius: var(--roundness);
   background-color: var(--color-surface0);
 }

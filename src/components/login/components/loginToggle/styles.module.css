@@ -8,7 +8,7 @@
     height: 100%;
     background-color: var(--color-surface2);
     transition: margin-left 0.25s;
-    border-radius: var(--roundnesss);
+    border-radius: var(--roundness);
   }
 
   .indicatorRight {

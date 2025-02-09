@@ -1,5 +1,5 @@
-import { Children } from "consts/general";
 import { classes } from "utils/classes";
+import { Children } from "types/general";
 
 import styles from "./styles.module.css";
 
