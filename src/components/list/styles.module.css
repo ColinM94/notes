@@ -1,7 +1,7 @@
 .container {
   .dropZone {
-    background-color: var(--color-surface3);
-    height: calc(var(--spacing-primary) * 3);
+    /* background-color: var(--color-surface3); */
+    height: 45px;
     transition: height 0.3s;
   }
 

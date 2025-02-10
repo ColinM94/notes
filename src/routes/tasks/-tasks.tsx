@@ -77,7 +77,7 @@ export const Tasks = () => {
       const absDifferences = positions.map((v) => Math.abs(v - mouse[1]));
 
       // get the item closest to the mouse
-      let result = absDifferences.indexOf(Math.min(...absDifferences));
+      const result = absDifferences.indexOf(Math.min(...absDifferences));
 
       // if (result > dragged) result += 1;
 
