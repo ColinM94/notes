@@ -1,25 +1,40 @@
 .container {
+  gap: var(--spacing-tertiary);
+
   .dropZone {
-    /* background-color: var(--color-surface3); */
-    height: 45px;
-    transition: height 0.3s;
+    height: 50px;
+    /* transition: height 0.3s;
+    transition: padding 0.3s; */
+
+    background-color: var(--color-surface1);
+
+    * {
+      visibility: hidden;
+    }
   }
 
-  .dropZoneHidden {
+  .dropZoneShow {
+    height: fit-content;
+  }
+
+  .dropZoneHide {
     height: 0px;
-    transition: height 0.3s;
+    padding: 0px;
+  }
+
+  .dropZoneNoTransition {
+    transition: unset;
   }
 
   .item {
-    border-radius: var(--roundness);
-    padding: var(--spacing-primary);
-    background-color: var(--color-surface0);
-    cursor: move;
+    transition: height 0.3s;
+    height: 50px;
   }
 
   .draggedItem {
     position: absolute;
     z-index: 99;
     width: 100%;
+    background-color: var(--color-surface3);
   }
 }
