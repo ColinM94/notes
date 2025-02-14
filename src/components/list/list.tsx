@@ -1,35 +1,34 @@
 import React from "react";
 
 import { classes } from "utils/classes";
+import { swapArrayElements } from "utils/swapArrayElements";
 
 import { ListItem } from "./components/listItem/listItem";
-import { ListProps } from "./types";
 import styles from "./styles.module.css";
-import { swapArrayElements } from "utils/swapArrayElements";
+import { ListProps } from "./types";
 
 export const List = <T,>(props: ListProps<T>) => {
   const { items, setItems, onDeleteClick, keyExtractor } = props;
 
   const [draggedIndex, setDraggedIndex] = React.useState<null | number>(null);
-  const [mouse, setMouse] = React.useState<[number, number]>([0, 0]);
   const [dropZoneIndex, setDropZoneIndex] = React.useState<null | number>(null);
+  const [mouse, setMouse] = React.useState<[number, number]>([0, 0]);
+  const [animationDisabled, setAnimationDisabled] = React.useState(false);
 
   React.useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMouse([e.x, e.y]);
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
+    // const handleTouchMove = (e: TouchEvent) => {
+    //   e.preventDefault();
 
-      setMouse([e.touches[0].clientX, e.touches[0].clientY]);
-    };
+    //   setMouse([e.touches[0].clientX, e.touches[0].clientY]);
+    // };
 
     document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("touchmove", handleTouchMove);
 
     return () => document.removeEventListener("mousemove", handleMouseMove);
-    return () => document.removeEventListener("touchmove", handleTouchMove);
   }, []);
 
   const handleMouseUp = (e: MouseEvent | TouchEvent) => {
@@ -48,16 +47,6 @@ export const List = <T,>(props: ListProps<T>) => {
 
     setItems(updatedItems);
 
-    // const tempItems = [...items];
-
-    // console.log(tempItems);
-
-    // console.log(`Swapping ${draggedIndex} with ${adjustedDropZoneIndex}`);
-
-    // swap(tempItems, draggedIndex, adjustedDropZoneIndex);
-
-    // setItems([...tempItems]);
-
     setDraggedIndex(null);
     setDropZoneIndex(null);
   };
@@ -72,15 +61,18 @@ export const List = <T,>(props: ListProps<T>) => {
     };
   });
 
-  // console.log(`Dragged Index: ${draggedIndex}`);
-  // console.log(`Drop Zone Index: ${dropZoneIndex}`);
-
   React.useEffect(() => {
     if (draggedIndex !== null) {
       const elements = Array.from(document.getElementsByClassName("dropZone"));
       const positions = elements.map((e) => e.getBoundingClientRect().top);
       const absDifferences = positions.map((v) => Math.abs(v - mouse[1]));
-      const result = absDifferences.indexOf(Math.min(...absDifferences));
+      let result = absDifferences.indexOf(Math.min(...absDifferences));
+
+      if (result >= draggedIndex) {
+        result += 1;
+      }
+
+      setAnimationDisabled(dropZoneIndex === null);
 
       setDropZoneIndex(result);
     }
@@ -93,22 +85,23 @@ export const List = <T,>(props: ListProps<T>) => {
 
         return (
           <React.Fragment key={keyExtractor(item)}>
-            {dropZoneIndex !== items.length + 1 && (
+            {!isDragged && (
               <ListItem
-                // index={index}
+                description={"description"}
+                onDeleteClick={() => {}}
                 className={classes(
                   "dropZone",
                   styles.dropZone,
                   dropZoneIndex === index && styles.dropZoneShow,
-                  dropZoneIndex !== index && styles.dropZoneHide
-                  // isDragged && styles.dropZoneNoTransition
+                  dropZoneIndex !== index && styles.dropZoneHide,
+                  (animationDisabled || !Boolean(draggedIndex)) &&
+                    styles.dropZoneNoTransition
                 )}
               />
             )}
 
             <ListItem
               description={item.description}
-              index={index}
               onDeleteClick={() => onDeleteClick(item)}
               onMouseDown={(e) => {
                 e.preventDefault();
@@ -130,16 +123,20 @@ export const List = <T,>(props: ListProps<T>) => {
         );
       })}
 
-      <ListItem
-        index={items.length - 1}
-        className={classes(
-          "dropZone",
-          styles.dropZone,
-          dropZoneIndex === items.length && styles.dropZoneShow,
-          dropZoneIndex !== items.length && styles.dropZoneHide
-          // isDragged && styles.dropZoneNoTransition
-        )}
-      />
+      {draggedIndex !== items.length && (
+        <ListItem
+          description={"description"}
+          onDeleteClick={() => {}}
+          className={classes(
+            "dropZone",
+            styles.dropZone,
+            dropZoneIndex === items.length && styles.dropZoneShow,
+            dropZoneIndex !== items.length && styles.dropZoneHide,
+            (animationDisabled || !Boolean(draggedIndex)) &&
+              styles.dropZoneNoTransition
+          )}
+        />
+      )}
     </div>
   );
 };

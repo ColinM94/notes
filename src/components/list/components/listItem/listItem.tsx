@@ -11,7 +11,7 @@ interface Props {
   onDeleteClick?: () => void;
   onMouseDown?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   onTouchStart?: (e: React.TouchEvent<HTMLDivElement>) => void;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
   className: string;
 }
 
